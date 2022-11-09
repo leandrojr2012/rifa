@@ -5,8 +5,8 @@ export const knex = new Knex({
     connection: {
       host : 'localhost',
       port : 3306,
-      user : 'root',
-      password : 'uabfc1914$',
+      user : 'leandro',
+      password : 'leandro123$',
       database : 'rifa_teste'
     }
   });
