@@ -1,9 +1,19 @@
 import Express  from "express";
+import { InserirUsuario } from "./servicos/usuario/usuario_inserir.js";
 
 const app = Express()
 const port = 8080
 
 app.use (Express.json())
+
+
+function teste(){
+
+    return new Promise( ( resolve, reject ) => {
+      resolve()
+    } )
+   
+   }
 
 //ROTA
 app.get('/', async (req, res)=>{
@@ -12,9 +22,11 @@ app.get('/', async (req, res)=>{
 
 //ROTA ITERACAO USUARIO
 app.post('/usuario', async (req, res)=>{
-    const usuario_nome = rq.body.nome
+    const usuario_nome = req.body.nome
     const usuario_email = req.body.email
-    .then(()=>{
+    InserirUsuario(usuario_nome, usuario_email)
+    teste().then(()=>{
+        console.log('nome: ' + usuario_nome + ' email: ' +usuario_email)
         return res.json({
             erro:false,
             mensagem:"Usuario cadastrado com sucesso!"
@@ -26,12 +38,12 @@ app.post('/usuario', async (req, res)=>{
         })
     })
 }),
-
+/*
 app.put('/usuario/{id}', async (req, res)=>{
     const usuario_id = req.params.id
     const usuario_nome = req.body.nome
     const usuario_email = req.body.email
-    .then(()=>{
+    teste().then(()=>{
         return res.json({
             erro:false,
             mensagem:"Usuario atualizado com sucesso!"
@@ -48,7 +60,7 @@ app.delete('/usuario/{id}', async (req, res)=>{
     const usuario_id = req.params.id
     const usuario_nome = req.body.nome
     const usuario_email = req.body.email
-    .then(()=>{
+    teste().then(()=>{
         return res.json({
             erro:false,
             mensagem:"Usuario deletado com sucesso!"
@@ -295,6 +307,8 @@ app.get('/rifa_numero/{id}/consultar', async (req, res)=>{
         })
     })
 }),*/
+
+
 
 
 //PORTA
