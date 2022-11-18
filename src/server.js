@@ -1,19 +1,12 @@
 import Express  from "express";
 import { InserirUsuario } from "./servicos/usuario/usuario_inserir.js";
+import { DeletarUsuario } from "./servicos/usuario/usuario_deletar.js";
+import { AtualizarUsuario } from "./servicos/usuario/usuario_atualizar.js"
 
 const app = Express()
 const port = 8080
 
 app.use (Express.json())
-
-
-function teste(){
-
-    return new Promise( ( resolve, reject ) => {
-      resolve()
-    } )
-   
-   }
 
 //ROTA
 app.get('/', async (req, res)=>{
@@ -25,25 +18,25 @@ app.post('/usuario', async (req, res)=>{
     const usuario_nome = req.body.nome
     const usuario_email = req.body.email
     InserirUsuario(usuario_nome, usuario_email)
-    teste().then(()=>{
-        console.log('nome: ' + usuario_nome + ' email: ' +usuario_email)
+    .then(()=>{
         return res.json({
             erro:false,
             mensagem:"Usuario cadastrado com sucesso!"
         })
     }).catch((err) => {console.log(err)
-        return res.status(400).json({
+        return  res.status(400).json({
             erro:true,
-            mensagem:"Erro, Usuario nao cadastrado!"
+            mensagem:err
         })
     })
 }),
-/*
-app.put('/usuario/{id}', async (req, res)=>{
+
+app.put('/usuario/:id', async (req, res)=>{
     const usuario_id = req.params.id
     const usuario_nome = req.body.nome
     const usuario_email = req.body.email
-    teste().then(()=>{
+    AtualizarUsuario(usuario_id, usuario_nome, usuario_email)
+    .then(()=>{
         return res.json({
             erro:false,
             mensagem:"Usuario atualizado com sucesso!"
@@ -51,16 +44,15 @@ app.put('/usuario/{id}', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro, Usuario nao atualizado!"
+            mensagem:err
         })
     })
 }),
 
-app.delete('/usuario/{id}', async (req, res)=>{
+app.delete('/usuario/:id', async (req, res)=>{
     const usuario_id = req.params.id
-    const usuario_nome = req.body.nome
-    const usuario_email = req.body.email
-    teste().then(()=>{
+    DeletarUsuario(usuario_id)
+    .then(()=>{
         return res.json({
             erro:false,
             mensagem:"Usuario deletado com sucesso!"

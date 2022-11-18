@@ -1,6 +1,6 @@
 import Knex from 'knex'
 
-export const knex = new Knex({
+export const db = new Knex({
     client: 'mysql2',
     connection: {
       host : 'localhost',
