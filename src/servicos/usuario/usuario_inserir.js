@@ -1,19 +1,20 @@
 import {db}  from "../../_database/bd.js"
 
-export function InserirUsuario( usuario_nome, usuario_email ){
-    return new Promise(( resolve, reject ) => {
+export async function InserirUsuario( usuario_nome, usuario_email ){
+    return new Promise(async( resolve, reject ) => {
 
         let caractere_email
 
         let caractere_nome
 
-        const usuarioIgualNome = db('usuario').where({usuario_nome : usuario_nome});
-        const usuarioIgualEmail = db('usuario').where({usuario_email : usuario_email});
+        const usuarioIgualNome = await db('usuario').where({usuario_nome : usuario_nome})
+        const usuarioIgualEmail =  await db('usuario').where({usuario_email : usuario_email})
+        console.log(usuarioIgualNome)
 
-        if(usuario_nome != usuarioIgualNome){
+        if(usuario_nome == usuarioIgualNome){
             reject('Nome de usuario ja cadastrado!')
         }
-        else if(usuario_email != usuarioIgualEmail){
+        else if(usuario_email == usuarioIgualEmail){
             reject('Email ja cadastrado')
         }
         else if(usuario_nome){
@@ -21,16 +22,17 @@ export function InserirUsuario( usuario_nome, usuario_email ){
                 if(i =='/' ||i=='$' ||i== '@'||i=='!'||i=='#'||i=='%'||i=='¨'||i=='&'||i=='*'
                  ||i=='('||i==')'||i=='_'||i=='-'||i=='+'||i=='=' ||i=='?'){
                     caractere_nome = i
+                    break;
                 }
                 if(caractere_nome){
                     reject('Voce nao pode utilizar caracteres para cadastrar um usuario!')
                 }
                 if(i == ' '){
                     caractere_nome = i
+                    break;
                 }
                 if(caractere_nome){
                     reject('Voce nao pode utulizar espaço entre as letras!')
-                break;
                 }
             }
         }   

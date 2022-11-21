@@ -68,7 +68,7 @@ app.delete('/usuario/:id', async (req, res)=>{
 //ROTA ITERACAO RIFA
 
 //rotas rifa
-app.post('/rifa/{id}', async (req, res)=>{
+app.post('/rifa/:id', async (req, res)=>{
     const rifauser_id = req.params.id
     const rifa_nome = req.body.nome
     const rifa_data = req.body.data
