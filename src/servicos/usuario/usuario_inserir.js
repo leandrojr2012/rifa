@@ -13,23 +13,27 @@ export async function InserirUsuario( usuario_nome, usuario_email ){
         }else if(usuarioIgualEmail.length > 0){
             reject('Email existente!')
         }
-        else if (usuario_nome.indexOf('!') > -1 ||
-                 usuario_nome.indexOf('@') > -1 ||
-                 usuario_nome.indexOf('#') > -1 ||
-                 usuario_nome.indexOf('$') > -1 ||
-                 usuario_nome.indexOf('%') > -1 ||
-                 usuario_nome.indexOf('¨') > -1 ||
-                 usuario_nome.indexOf('&') > -1 ||
-                 usuario_nome.indexOf('*') > -1 ||
-                 usuario_nome.indexOf('(') > -1 ||
-                 usuario_nome.indexOf(')') > -1 ||
-                 usuario_nome.indexOf('-') > -1 ||
-                 usuario_nome.indexOf('-') > -1 ||
-                 usuario_nome.indexOf('+') > -1 ||
-                 usuario_nome.indexOf('=') > -1 ||
-                 usuario_nome.indexOf('¹') > -1 
+        else if (usuario_nome.indexOf('"') > -1 || usuario_nome.indexOf('[') > -1 ||
+                 usuario_nome.indexOf('!') > -1 || usuario_nome.indexOf('{') > -1 ||
+                 usuario_nome.indexOf('@') > -1 || usuario_nome.indexOf('ª') > -1 ||
+                 usuario_nome.indexOf('#') > -1 || usuario_nome.indexOf(']') > -1 ||
+                 usuario_nome.indexOf('$') > -1 || usuario_nome.indexOf('}') > -1 ||
+                 usuario_nome.indexOf('%') > -1 || usuario_nome.indexOf('º') > -1 ||
+                 usuario_nome.indexOf('¨') > -1 || usuario_nome.indexOf('~') > -1 ||
+                 usuario_nome.indexOf('&') > -1 || usuario_nome.indexOf('^') > -1 ||
+                 usuario_nome.indexOf('*') > -1 || usuario_nome.indexOf(';') > -1 ||
+                 usuario_nome.indexOf('(') > -1 || usuario_nome.indexOf(':') > -1 ||
+                 usuario_nome.indexOf(')') > -1 || usuario_nome.indexOf('>') > -1 ||
+                 usuario_nome.indexOf('_') > -1 || usuario_nome.indexOf('.') > -1 ||
+                 usuario_nome.indexOf('-') > -1 || usuario_nome.indexOf('<') > -1 ||
+                 usuario_nome.indexOf('=') > -1 || usuario_nome.indexOf(',') > -1 ||
+                 usuario_nome.indexOf('+') > -1 || usuario_nome.indexOf('¬') > -1 ||
+                 usuario_nome.indexOf('§') > -1 || usuario_nome.indexOf('`') > -1 ||
+                 usuario_nome.indexOf('/') > -1 || usuario_nome.indexOf('¢') > -1 ||
+                 usuario_nome.indexOf('?') > -1 || usuario_nome.indexOf('³') > -1 ||
+                 usuario_nome.indexOf('°') > -1 || usuario_nome.indexOf('²') > -1 
                  ){
-            reject('Voce nao pode utilizar caracteres para cadastrar um usuario!')
+            reject('Campo Nome nao pode receber caracteres para cadastrar um usuario!')
         }
         else if(verificacaoEmail == false){
             reject('Email invalido')
@@ -44,7 +48,6 @@ export async function InserirUsuario( usuario_nome, usuario_email ){
             reject('Campo Email nao pode conter espaço!')
         }
         else{   
-            console.log(usuario_email.indexOf('@') > -1)
             db.insert({usuario_nome, usuario_email}).into("usuario")
             .then (data =>{
                 resolve()
