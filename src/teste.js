@@ -15,3 +15,11 @@ if(esseaqui == undefined){
 }
 
 console.log(esseaqui)
+
+var string = "Jose_Silva";
+if (string.indexOf('_') < -1)
+{
+  console.log("contém");
+}else{
+    console.log('erro')
+}

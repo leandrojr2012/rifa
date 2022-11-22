@@ -1,59 +1,50 @@
 import {db}  from "../../_database/bd.js"
 
 export async function InserirUsuario( usuario_nome, usuario_email ){
-    return new Promise(async( resolve, reject ) => {
+    return new Promise(async ( resolve, reject ) => {
 
-        let caractere_email
+        let verificacaoEmail = usuario_email.indexOf('@') > -1 && usuario_email.indexOf('.com') > -1
 
-        let caractere_nome
+        const usuarioIgualNome = await db('usuario').where({usuario_nome});
+        const usuarioIgualEmail = await db('usuario').where({usuario_email});
 
-        const usuarioIgualNome = await db('usuario').where({usuario_nome : usuario_nome})
-        const usuarioIgualEmail =  await db('usuario').where({usuario_email : usuario_email})
-        console.log(usuarioIgualNome)
-
-        if(usuario_nome == usuarioIgualNome){
-            reject('Nome de usuario ja cadastrado!')
+        if(usuarioIgualNome.length > 0){
+            reject('Nome existente!')
+        }else if(usuarioIgualEmail.length > 0){
+            reject('Email existente!')
         }
-        else if(usuario_email == usuarioIgualEmail){
-            reject('Email ja cadastrado')
+        else if (usuario_nome.indexOf('!') > -1 ||
+                 usuario_nome.indexOf('@') > -1 ||
+                 usuario_nome.indexOf('#') > -1 ||
+                 usuario_nome.indexOf('$') > -1 ||
+                 usuario_nome.indexOf('%') > -1 ||
+                 usuario_nome.indexOf('¨') > -1 ||
+                 usuario_nome.indexOf('&') > -1 ||
+                 usuario_nome.indexOf('*') > -1 ||
+                 usuario_nome.indexOf('(') > -1 ||
+                 usuario_nome.indexOf(')') > -1 ||
+                 usuario_nome.indexOf('-') > -1 ||
+                 usuario_nome.indexOf('-') > -1 ||
+                 usuario_nome.indexOf('+') > -1 ||
+                 usuario_nome.indexOf('=') > -1 ||
+                 usuario_nome.indexOf('¹') > -1 
+                 ){
+            reject('Voce nao pode utilizar caracteres para cadastrar um usuario!')
         }
-        else if(usuario_nome){
-            for(let i of usuario_nome){
-                if(i =='/' ||i=='$' ||i== '@'||i=='!'||i=='#'||i=='%'||i=='¨'||i=='&'||i=='*'
-                 ||i=='('||i==')'||i=='_'||i=='-'||i=='+'||i=='=' ||i=='?'){
-                    caractere_nome = i
-                    break;
-                }
-                if(caractere_nome){
-                    reject('Voce nao pode utilizar caracteres para cadastrar um usuario!')
-                }
-                if(i == ' '){
-                    caractere_nome = i
-                    break;
-                }
-                if(caractere_nome){
-                    reject('Voce nao pode utulizar espaço entre as letras!')
-                }
-            }
-        }   
+        else if(verificacaoEmail == false){
+            reject('Email invalido')
+        }
         else if(usuario_nome == ""){
-            reject('Voce nao pode deixar o campo nome em branco!')
+            reject('Campo Nome nao pode ficar em branco!')
         }
-        else if(usuario_email){
-            for(let i of usuario_email){
-                if(i == '@'){
-                    caractere_email = i
-                }
-            }   
-        }
-        //console.log(caractere_email.indexOf('@') !== -1)
         else if(usuario_email == ""){
-            reject('Voce nao pode deixar o campo email em branco!')
+            reject('Campo Email nao pode ficar em branco!')
         }
-        else if(caractere_email != '@' ){
-            reject('Esse nao é um EMAIL valido!')
+        else if(usuario_email == " "){
+            reject('Campo Email nao pode conter espaço!')
         }
         else{   
+            console.log(usuario_email.indexOf('@') > -1)
             db.insert({usuario_nome, usuario_email}).into("usuario")
             .then (data =>{
                 resolve()
