@@ -1,45 +1,35 @@
+import { caracteres } from "../../funcoes/caracteres.js"
 import {db}  from "../../_database/bd.js"
 
-export function AtualizarUsuario(usuario_id, usuario_nome, usuario_email){
-    return new Promise(( resolve, reject ) => {
+export async function AtualizarUsuario(usuario_id, usuario_nome, usuario_email){
+    return new Promise(async( resolve, reject ) => {
 
-        let caractere_nome
-        let caractere_email
+        const verificacaoEmail = usuario_email.indexOf('@') > -1 && usuario_email.indexOf('.com') > -1
 
-        if(usuario_nome){
-            for(let i of usuario_nome){
-                if(i =='/' ||i=='$' ||i== '@'||i=='!'||i=='#'||i=='%'||i=='¨'||i=='&'||i=='*'
-                ||i=='('||i==')'||i=='_'||i=='-'||i=='+'||i=='=' ||i=='?'){
-                    caractere_nome = i
-                }
-                if(caractere_nome){
-                    reject('Voce nao pode utlizar caracteres para atualizar um nome!')
-                }
-                if(usuario_nome == ' '){
-                    caractere_nome = i
-                }
-                if(caractere_nome){
-                    reject('Voce nao pode utilizar espaco entre as letras!')
-                }
-                if(usuario_nome == ""){
-                    reject('Voce nao pode deixar o campo nome em branco!')
-                }
-            }
-        }
-        if(usuario_email){
-            for(let i of usuario_email){
-                if(i == '@'){
-                    caractere_email = i
-                    }
-                }
-            }
-        if(usuario_email == ""){
-            reject('Voce nao pode deixar o campo email em branco!')
-        }
-        if(caractere_email != '@' ){
-            console.log(caractere_email)
-            reject('Esse nao é um EMAIL valido!')
-        }    
+       const usuarioIgualNome = await db('usuario').where({usuario_nome})
+       const usuarioIgualEmail = await db('usuario').where({usuario_email})
+
+       if(usuarioIgualNome.length > 0){
+        reject('Nome Existente!')
+       }
+       else if(usuarioIgualEmail.length > 0){
+        reject('Email Existente!')
+       }
+       else if(caracteres(usuario_nome)){
+        reject('Campo Nome nao pode receber caracteres para ATUALIZAR usuario!')
+       }
+       else if(usuario_nome == ""){
+        reject('Campo Nome nao pode ficar em branco!')
+       }
+       else if(usuario_email == ""){
+        reject('Campo Email nao pode ficar em branco!')
+       }
+       else if(verificacaoEmail == false){
+        reject('Email invalido!')
+       }
+       else if(usuario_email == ' '){
+        reject('Campo Email nao pode conter espaço!')
+       }        
         else{
                         db('usuario')
                 .where({

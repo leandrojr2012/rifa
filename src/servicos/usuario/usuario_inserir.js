@@ -1,4 +1,5 @@
 import {db}  from "../../_database/bd.js"
+import {caracteres} from "../../funcoes/caracteres.js"
 
 export async function InserirUsuario( usuario_nome, usuario_email ){
     return new Promise(async ( resolve, reject ) => {
@@ -13,26 +14,7 @@ export async function InserirUsuario( usuario_nome, usuario_email ){
         }else if(usuarioIgualEmail.length > 0){
             reject('Email existente!')
         }
-        else if (usuario_nome.indexOf('"') > -1 || usuario_nome.indexOf('[') > -1 ||
-                 usuario_nome.indexOf('!') > -1 || usuario_nome.indexOf('{') > -1 ||
-                 usuario_nome.indexOf('@') > -1 || usuario_nome.indexOf('ª') > -1 ||
-                 usuario_nome.indexOf('#') > -1 || usuario_nome.indexOf(']') > -1 ||
-                 usuario_nome.indexOf('$') > -1 || usuario_nome.indexOf('}') > -1 ||
-                 usuario_nome.indexOf('%') > -1 || usuario_nome.indexOf('º') > -1 ||
-                 usuario_nome.indexOf('¨') > -1 || usuario_nome.indexOf('~') > -1 ||
-                 usuario_nome.indexOf('&') > -1 || usuario_nome.indexOf('^') > -1 ||
-                 usuario_nome.indexOf('*') > -1 || usuario_nome.indexOf(';') > -1 ||
-                 usuario_nome.indexOf('(') > -1 || usuario_nome.indexOf(':') > -1 ||
-                 usuario_nome.indexOf(')') > -1 || usuario_nome.indexOf('>') > -1 ||
-                 usuario_nome.indexOf('_') > -1 || usuario_nome.indexOf('.') > -1 ||
-                 usuario_nome.indexOf('-') > -1 || usuario_nome.indexOf('<') > -1 ||
-                 usuario_nome.indexOf('=') > -1 || usuario_nome.indexOf(',') > -1 ||
-                 usuario_nome.indexOf('+') > -1 || usuario_nome.indexOf('¬') > -1 ||
-                 usuario_nome.indexOf('§') > -1 || usuario_nome.indexOf('`') > -1 ||
-                 usuario_nome.indexOf('/') > -1 || usuario_nome.indexOf('¢') > -1 ||
-                 usuario_nome.indexOf('?') > -1 || usuario_nome.indexOf('³') > -1 ||
-                 usuario_nome.indexOf('°') > -1 || usuario_nome.indexOf('²') > -1 
-                 ){
+        else if (caracteres(usuario_nome)){
             reject('Campo Nome nao pode receber caracteres para cadastrar um usuario!')
         }
         else if(verificacaoEmail == false){

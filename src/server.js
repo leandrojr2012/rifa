@@ -2,6 +2,9 @@ import Express  from "express";
 import { InserirUsuario } from "./servicos/usuario/usuario_inserir.js";
 import { DeletarUsuario } from "./servicos/usuario/usuario_deletar.js";
 import { AtualizarUsuario } from "./servicos/usuario/usuario_atualizar.js"
+import { CriarRifa } from "./servicos/rifa/rifa_criar.js";
+import { AtualizarRifa } from "./servicos/rifa/rifa_atualizar.js";
+import { StatusIniciar } from "./servicos/rifa/rifa_status_iniciar.js";
 
 const app = Express()
 const port = 8080
@@ -69,9 +72,10 @@ app.delete('/usuario/:id', async (req, res)=>{
 
 //rotas rifa
 app.post('/rifa/:id', async (req, res)=>{
-    const rifauser_id = req.params.id
+    const rifa_usuario_id = req.params.id
     const rifa_nome = req.body.nome
-    const rifa_data = req.body.data
+    const rifa_dt_inicio = req.body.data
+    CriarRifa(rifa_usuario_id, rifa_nome, rifa_dt_inicio)
     .then(()=>{
         return res.json({
             erro:false,
@@ -80,14 +84,16 @@ app.post('/rifa/:id', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro, Rifa nao criada!"
+            mensagem:err
         })
     })
 }),
 
-app.patch('/rifa/{id}', async (req, res)=>{
-    const rifauser_id = req.params.id
+app.put('/rifa/:id', async (req, res)=>{
+    const rifa_usuario_id = req.params.id
+    const rifa_id = req.body.id_rifa
     const rifa_nome = req.body.nome
+    AtualizarRifa(rifa_nome, rifa_usuario_id, rifa_id )
     .then(()=>{
         return res.json({
             erro:false,
@@ -96,14 +102,15 @@ app.patch('/rifa/{id}', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro, Rifa nao editada !"
+            mensagem:err
         })
     })
 }),
 
 //rotas para status da rifa
-app.patch('/rifa/{id}/iniciar', async (req, res)=>{ 
+app.patch('/rifa/:id/iniciar', async (req, res)=>{ 
     const rifa_id = req.params.rifa_id
+    StatusIniciar(rifa_id)
     .then(()=>{
         return res.json({
             erro:false,
@@ -112,7 +119,7 @@ app.patch('/rifa/{id}/iniciar', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro!"
+            mensagem:err
         })
     })
 }),
