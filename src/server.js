@@ -10,10 +10,12 @@ import { StatusConcluir } from "./servicos/rifa/rifa_status_concluir.js";
 import { StatusEstornar } from "./servicos/rifa/rifa_status_estornar.js";
 import { StatusPausar } from "./servicos/rifa/rifa_status_pausar.js";
 import { StatusRetomar } from "./servicos/rifa/rifa_status_retomar.js";
-import { StatusNumReservar } from "./servicos/numero/rifaNum_reservar.js";
-import { StatusNumConfirmar } from "./servicos/numero/rifaNum_confirmar.js";
-import { StatusNumRetomar } from "./servicos/numero/rifaNum_retomar.js";
-import { StatusNumEstorno } from "./servicos/numero/rifaNum_estorno.js";
+import { StatusNumReservar } from "./servicos/numero/rifaNum_status_reservar.js";
+import { StatusNumConfirmar } from "./servicos/numero/rifaNum_status_ confirmar.js";
+import { StatusNumRetomar } from "./servicos/numero/rifaNum_status_retomar.js";
+import { StatusNumEstorno } from "./servicos/numero/rifaNum_status_estorno.js";
+import { CriarRifaNum } from "./servicos/numero/rifaNumero_criar.js";
+import { AtualizarRifaNum } from "./servicos/numero/rifaNum_atualizar.js";
 
 
 const app = Express()
@@ -27,6 +29,7 @@ app.get('/', async (req, res)=>{
 }),
 
 //ROTA ITERACAO USUARIO
+
 app.post('/usuario', async (req, res)=>{
     const usuario_nome = req.body.nome
     const usuario_email = req.body.email
@@ -77,6 +80,8 @@ app.delete('/usuario/:id', async (req, res)=>{
         })
     })
 }),
+
+//ROTA ITERACAO CLIENTE(FALTA CRIAR ROTAS DE CLIENTE)
 
 //ROTA ITERACAO RIFA
 
@@ -227,6 +232,41 @@ app.patch('/rifa/:id/concluir', async (req, res)=>{
         return res.status(400).json({
             erro:true,
             mensagem: err
+        })
+    })
+}),
+
+//ROTA ITERACAO NUMERO RIFA
+
+//rotas numero rifa (FALTA CONCLUIR (CRIAR RIFA NUMERO E ATUALIZAR RIFA NUMERO))
+app.post('/rifa_numero/:id', async (req, res)=>{
+    const rifa_numero_cliente_id = req.params.id
+    CriarRifaNum(rifa_numero_cliente_id)
+    .then(()=>{
+        return res.json({
+            erro:false,
+            mensagem:"Rifa criada com sucesso!"
+        })
+    }).catch((err) => {console.log(err)
+        return res.status(400).json({
+            erro:true,
+            mensagem:err
+        })
+    })
+}),
+
+app.put('/rifa_numero/:id', async (req, res)=>{
+    const rifa_numero_cliente_id = req.params.id
+    AtualizarRifaNum(rifa_numero_cliente_id)
+    .then(()=>{
+        return res.json({
+            erro:false,
+            mensagem:"Rifa editada com sucesso!"
+        })
+    }).catch((err) => {console.log(err)
+        return res.status(400).json({
+            erro:true,
+            mensagem:err
         })
     })
 }),
