@@ -10,6 +10,10 @@ import { StatusConcluir } from "./servicos/rifa/rifa_status_concluir.js";
 import { StatusEstornar } from "./servicos/rifa/rifa_status_estornar.js";
 import { StatusPausar } from "./servicos/rifa/rifa_status_pausar.js";
 import { StatusRetomar } from "./servicos/rifa/rifa_status_retomar.js";
+import { StatusNumReservar } from "./servicos/numero/rifaNum_reservar.js";
+import { StatusNumConfirmar } from "./servicos/numero/rifaNum_confirmar.js";
+import { StatusNumRetomar } from "./servicos/numero/rifaNum_retomar.js";
+import { StatusNumEstorno } from "./servicos/numero/rifaNum_estorno.js";
 
 
 const app = Express()
@@ -130,7 +134,7 @@ app.patch('/rifa/:id/iniciar', async (req, res)=>{
     })
 }),
 
-app.patch('/rifa/{id}/pausar', async (req, res)=>{
+app.patch('/rifa/:id/pausar', async (req, res)=>{
     const rifa_id = req.params.id
     StatusPausar(rifa_id)
     .then(()=>{
@@ -146,7 +150,7 @@ app.patch('/rifa/{id}/pausar', async (req, res)=>{
     })
 }),
 
-app.patch('/rifa/{id}/retomar', async (req, res)=>{
+app.patch('/rifa/:id/retomar', async (req, res)=>{
     const rifa_id = req.params.id
     StatusRetomar(rifa_id)
     .then(()=>{
@@ -163,7 +167,7 @@ app.patch('/rifa/{id}/retomar', async (req, res)=>{
 
 }),
 
-app.patch('/rifa/{id}/cancelar', async (req, res)=>{
+app.patch('/rifa/:id/cancelar', async (req, res)=>{
     const rifa_id = req.params.id
     StatusCancelar(rifa_id)
     .then(()=>{
@@ -179,7 +183,7 @@ app.patch('/rifa/{id}/cancelar', async (req, res)=>{
     })
 }),
 
-app.patch('/rifa/{id}/finalizar', async (req, res)=>{
+app.patch('/rifa/:id/finalizar', async (req, res)=>{
     const rifa_id = req.params.id
     StatusFinalizar(rifa_id)
     .then(()=>{
@@ -195,7 +199,7 @@ app.patch('/rifa/{id}/finalizar', async (req, res)=>{
     })
 }),
 
-app.patch('/rifa/{id}/estornar', async (req, res)=>{
+app.patch('/rifa/:id/estornar', async (req, res)=>{
     const rifa_id = req.params.id
     StatusEstornar(rifa_id)
     .then(()=>{
@@ -211,7 +215,7 @@ app.patch('/rifa/{id}/estornar', async (req, res)=>{
     })
 }),
 
-app.patch('/rifa/{id}/concluir', async (req, res)=>{
+app.patch('/rifa/:id/concluir', async (req, res)=>{
     const rifa_id = req.params.id
     StatusConcluir(rifa_id)
     .then(()=>{
@@ -227,9 +231,10 @@ app.patch('/rifa/{id}/concluir', async (req, res)=>{
     })
 }),
 
-//rotas para reservas
-app.post('/rifa_numero/{id}/reservar', async (req, res)=>{
-    const res_num_id = req.params.id
+//rotas para status do numero de rifa
+app.post('/rifa_numero/:id/reservar', async (req, res)=>{
+    const rifanumst_rifa_numero_id = req.params.id
+    StatusNumReservar(rifanumst_rifa_numero_id)
     .then(()=>{
         return res.json({
             erro:false,
@@ -238,13 +243,14 @@ app.post('/rifa_numero/{id}/reservar', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro, numero nao reservado !"
+            mensagem: err
         })
     })
 }),
 
-app.patch('/rifa_numero/{id}/confirmar', async (req, res)=>{
-    const res_num_id = req.params.id
+app.patch('/rifa_numero/:id/confirmar', async (req, res)=>{
+    const rifanumst_rifa_numero_id = req.params.id
+    StatusNumConfirmar(rifanumst_rifa_numero_id)
     .then(()=>{
         return res,json({
             erro:false,
@@ -253,13 +259,14 @@ app.patch('/rifa_numero/{id}/confirmar', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro!"
+            mensagem: err
         })
     })
 }),
 
-app.patch('/rifa_numero/{id}/retornar', async (req, res)=>{
-    const res_num_id = req.params.id
+app.patch('/rifa_numero/:id/retornar', async (req, res)=>{
+    const rifanumst_rifa_numero_id = req.params.id
+    StatusNumRetomar(rifanumst_rifa_numero_id)
     .then(()=>{
         return res.json({
             erro:false,
@@ -268,13 +275,14 @@ app.patch('/rifa_numero/{id}/retornar', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro!"
+            mensagem: err
         })
     })
 }),
 
-app.patch('/rifa_numero/{id}/estorno', async (req, res)=>{
-    const res_num_id = req.params.id
+app.patch('/rifa_numero/:id/estorno', async (req, res)=>{
+    const rifanumst_rifa_numero_id = req.params.id
+    StatusNumEstorno(rifanumst_rifa_numero_id)
     .then(()=>{
         return res,json({
             erro:false,
@@ -283,7 +291,7 @@ app.patch('/rifa_numero/{id}/estorno', async (req, res)=>{
     }).catch((err) => {console.log(err)
         return res.status(400).json({
             erro:true,
-            mensagem:"Erro!"
+            mensagem: err
         })
     })
 }),

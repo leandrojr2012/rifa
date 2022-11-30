@@ -1,13 +1,13 @@
 import {db} from "../../_database/bd.js"
 
-export function StatusConcluir(rifa_id){
-    return new Promise((resolve, reject) => {
+export async function StatusConcluir(rifa_id){
+    return new Promise(async(resolve, reject) => {
         
-        db.insert({rifa_id}).into("rifa_status")
-        .then (data =>{
+        await db('rifa_status')
+            .where({rifa_status_rifa_id})
+            .update({rifa_status_ativo:0})
+
+        await db.insert({rifa_status_condicao : 5, rifa_status_date: new Date(), rifa_status_rifa_id, rifa_status_ativo : 1}).into("rifa_status")
             resolve()
-        }).catch(err => {
-            console.log(err)
-        })
     })
 }
