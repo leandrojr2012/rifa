@@ -24,6 +24,7 @@ const port = 8080
 app.use (Express.json())
 
 //ROTA
+
 app.get('/', async (req, res)=>{
     res.send('Rifa!')
 }),
@@ -81,7 +82,58 @@ app.delete('/usuario/:id', async (req, res)=>{
     })
 }),
 
-//ROTA ITERACAO CLIENTE(FALTA CRIAR ROTAS DE CLIENTE)
+//ROTA ITERACAO CLIENTE
+
+app.post('/cliente', async (req, res) => {
+    const cliente_nome = req.body.nome
+    const cliente_celular = req.body.celular
+    InserirCliente(cliente_nome, cliente_celular)
+    .then(()=>{
+        return res.json({
+            erro:false,
+            mensagem:"Cliente cadastrado com sucesso!"
+        }).catch((err)=>{console.log(err)
+            return res.status(400).json({
+                erro:true,
+                mensagem: err
+            })
+        })
+    })
+}),
+
+app.put('/cliente/:id', async (req, res) => {
+    const cliente_id = req.params.id
+    const cliente_nome = req.body.nome
+    const cliente_celular = req.body.celular
+    AtualizarCliente(cliente_id, cliente_nome, cliente_celular)
+    .then(()=>{
+        return res.json({
+            erro:false,
+            mensagem:"Cliente cadastrado com sucesso!"
+        }).catch((err)=>{console.log(err)
+            return res.status(400).json({
+                erro:true,
+                mensagem: err
+            })
+        })
+    })
+}),
+
+app.delete('/cliente/:id', async (req, res) => {
+    const cliente_id = req.params.id
+    DeletarCliente(cliente_id)
+    .then(()=>{
+        return res.json({
+            erro:false,
+            mensagem:"Cliente cadastrado com sucesso!"
+        }).catch((err)=>{console.log(err)
+            return res.status(400).json({
+                erro:true,
+                mensagem: err
+            })
+        })
+    })
+}),
 
 //ROTA ITERACAO RIFA
 
