@@ -1,21 +1,24 @@
 import Express  from "express";
-import { InserirUsuario } from "./servicos/usuario/usuario_inserir.js";
-import { DeletarUsuario } from "./servicos/usuario/usuario_deletar.js";
-import { AtualizarUsuario } from "./servicos/usuario/usuario_atualizar.js"
-import { CriarRifa } from "./servicos/rifa/rifa_criar.js";
-import { AtualizarRifa } from "./servicos/rifa/rifa_atualizar.js";
-import { StatusIniciar } from "./servicos/rifa/rifa_status_iniciar.js";
-import { StatusCancelar } from "./servicos/rifa/rifa_status_cancelar.js";
-import { StatusConcluir } from "./servicos/rifa/rifa_status_concluir.js";
-import { StatusEstornar } from "./servicos/rifa/rifa_status_estornar.js";
-import { StatusPausar } from "./servicos/rifa/rifa_status_pausar.js";
-import { StatusRetomar } from "./servicos/rifa/rifa_status_retomar.js";
-import { StatusNumReservar } from "./servicos/numero/rifaNum_status_reservar.js";
+import { InserirUsuario }     from "./servicos/usuario/usuario_inserir.js";
+import { DeletarUsuario }     from "./servicos/usuario/usuario_deletar.js";
+import { AtualizarUsuario }   from "./servicos/usuario/usuario_atualizar.js"
+import { CriarRifa }          from "./servicos/rifa/rifa_criar.js";
+import { AtualizarRifa }      from "./servicos/rifa/rifa_atualizar.js";
+import { StatusIniciar }      from "./servicos/rifa/rifa_status_iniciar.js";
+import { StatusCancelar }     from "./servicos/rifa/rifa_status_cancelar.js";
+import { StatusConcluir }     from "./servicos/rifa/rifa_status_concluir.js";
+import { StatusEstornar }     from "./servicos/rifa/rifa_status_estornar.js";
+import { StatusPausar }       from "./servicos/rifa/rifa_status_pausar.js";
+import { StatusRetomar }      from "./servicos/rifa/rifa_status_retomar.js";
+import { StatusNumReservar }  from "./servicos/numero/rifaNum_status_reservar.js";
 import { StatusNumConfirmar } from "./servicos/numero/rifaNum_status_ confirmar.js";
-import { StatusNumRetomar } from "./servicos/numero/rifaNum_status_retomar.js";
-import { StatusNumEstorno } from "./servicos/numero/rifaNum_status_estorno.js";
-import { CriarRifaNum } from "./servicos/numero/rifaNumero_criar.js";
-import { AtualizarRifaNum } from "./servicos/numero/rifaNum_atualizar.js";
+import { StatusNumRetomar }   from "./servicos/numero/rifaNum_status_retomar.js";
+import { StatusNumEstorno }   from "./servicos/numero/rifaNum_status_estorno.js";
+import { ReservarRifaNum }       from "./servicos/numero/rifaNumero_criar.js";
+import { AtualizarRifaNum }   from "./servicos/numero/rifaNum_atualizar.js";
+import { InserirCliente }     from "./servicos/cliente/cliente_inserir.js"
+import { AtualizarCliente }   from "./servicos/cliente/cliente_atualizar.js"
+import { DeletarCliente }     from "./servicos/cliente/cliente_deletar.js"
 
 
 const app = Express()
@@ -92,12 +95,12 @@ app.post('/cliente', async (req, res) => {
         return res.json({
             erro:false,
             mensagem:"Cliente cadastrado com sucesso!"
-        }).catch((err)=>{console.log(err)
+        })
+    }).catch((err)=>{console.log(err)
             return res.status(400).json({
                 erro:true,
                 mensagem: err
             })
-        })
     })
 }),
 
@@ -109,13 +112,13 @@ app.put('/cliente/:id', async (req, res) => {
     .then(()=>{
         return res.json({
             erro:false,
-            mensagem:"Cliente cadastrado com sucesso!"
-        }).catch((err)=>{console.log(err)
+            mensagem:"Cliente atualizado com sucesso!"
+        })
+    }).catch((err)=>{console.log(err)
             return res.status(400).json({
                 erro:true,
                 mensagem: err
             })
-        })
     })
 }),
 
@@ -125,13 +128,13 @@ app.delete('/cliente/:id', async (req, res) => {
     .then(()=>{
         return res.json({
             erro:false,
-            mensagem:"Cliente cadastrado com sucesso!"
-        }).catch((err)=>{console.log(err)
+            mensagem:"Cliente deletado com sucesso!"
+        })
+    }).catch((err)=>{console.log(err)
             return res.status(400).json({
                 erro:true,
                 mensagem: err
             })
-        })
     })
 }),
 
@@ -142,7 +145,8 @@ app.post('/rifa/:id', async (req, res)=>{
     const rifa_usuario_id = req.params.id
     const rifa_nome = req.body.nome
     const rifa_dt_inicio = req.body.data
-    CriarRifa(rifa_usuario_id, rifa_nome, rifa_dt_inicio)
+    const rifa_qnt_numero = req.body.qnt_numero
+    CriarRifa(rifa_usuario_id, rifa_nome, rifa_dt_inicio, rifa_qnt_numero)
     .then(()=>{
         return res.json({
             erro:false,
@@ -160,7 +164,8 @@ app.put('/rifa/:id', async (req, res)=>{
     const rifa_usuario_id = req.params.id
     const rifa_id = req.body.id_rifa
     const rifa_nome = req.body.nome
-    AtualizarRifa(rifa_nome, rifa_usuario_id, rifa_id )
+    const rifa_qnt_numero = req.body.qnt_numero
+    AtualizarRifa(rifa_nome, rifa_usuario_id, rifa_id, rifa_qnt_numero )
     .then(()=>{
         return res.json({
             erro:false,
@@ -293,7 +298,9 @@ app.patch('/rifa/:id/concluir', async (req, res)=>{
 //rotas numero rifa (FALTA CONCLUIR (CRIAR RIFA NUMERO E ATUALIZAR RIFA NUMERO))
 app.post('/rifa_numero/:id', async (req, res)=>{
     const rifa_numero_cliente_id = req.params.id
-    CriarRifaNum(rifa_numero_cliente_id)
+    const rifa_numero_rifa_id = req.body.id
+    const rifa_numero_num = req.body.num
+    ReservarRifaNum(rifa_numero_cliente_id, rifa_numero_rifa_id, rifa_numero_num)
     .then(()=>{
         return res.json({
             erro:false,
