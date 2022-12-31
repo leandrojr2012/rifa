@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="rifaUsuario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <script>
+        function limpaCampo(){
+        
+        document.getElementById('nome').value = ''
+        document.getElementById('data').value = ''
+        document.getElementById('qnt_numero').value = ''
+}
+
+        function salvar(nome, data, qnt_numero){
+
+            let date = {nome, data, qnt_numero}
+
+            fetch("http://localhost:8080/rifa/2?", {
+                method: "POST",
+                body: JSON.stringify(date),
+                headers: {"Content-type": "application/json; charset=UTF-8"}          
+            }).then(function(response){})
+            limpaCampo()
+        }
+    </script>
+    <title>Rifa(s) Usuario</title>
+</head>
+<body>
+    <header>
+        <h1>RIFAS.com </h1>
+    </header>
+    <div class="user">
+
+        <h4>user            
+        </h4>
+    </div>
+    <div class="menu">
+        <h4>&#9776MENU</h4>
+    </div>
+    <main>
+        <div class="inf">Você possui um total de: <%= rows.length %>  RIFAS</div>
+        <div class="tab">
+            <table>
+                <% for(let i=0; i<rows.length; i++) {%>
+                    <tbody>
+                        <tr>
+                            <td class="linhas">
+                                <%= rows[i].rifa_nome %>
+
+                            </td>
+                            <td>
+                                <div class="status" id="statusRifa">
+                                    <button> 
+                                    </button>
+                                    <% } %>
+                                </div>
+                            </td>
+                            <td>
+                                <img src="../img/escrever.png" alt="editar" class="img">
+                                <img src="../img/lixeira-de-reciclagem.png" alt="lixeira" class="img">
+                                <img src="../img/olho.png" alt="olho" class="img">
+                            </td>
+                                <% } %>  
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+        <div class="tab2">
+            <table class="tableDois">
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><input placeholder="Digite o nome da rifa" type="text" class="input" id="nome" style="width: 120%"></input></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input placeholder="Digite a data" type="date" class="input" id="data" style="width: 120%"></input></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input placeholder="Digite a qnt de numero" type="number" class="input" id="qnt_numero" style="width: 120%"></input></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+            <button class="criarRifa" onclick="salvar(document.getElementById('nome').value, document.getElementById('data').value, document.getElementById('qnt_numero').value)">CRIAR RIFA</button>
+    </main>
+</body>
+</html>

@@ -3,7 +3,7 @@ import { db } from "../../_database/bd.js";
 
 export function AtualizarRifa(rifa_nome, rifa_usuario_id, rifa_id, rifa_qnt_numero){
     return new Promise((resolve, reject) => {
-        if(rifa_nome == ''){
+        if(rifa_nome,trim() == ''){
             reject('Campo Nome rifa, nao pode ficar em branco!')
         }
         else if(caracteres(rifa_nome)){

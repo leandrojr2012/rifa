@@ -20,7 +20,7 @@ export async function InserirUsuario( usuario_nome, usuario_email ){
         else if(verificacaoEmail == false){
             reject('Email invalido')
         }
-        else if(usuario_nome == ""){
+        else if(usuario_nome.trim() == ""){
             reject('Campo Nome nao pode ficar em branco!')
         }
         else if(usuario_email == ""){

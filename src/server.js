@@ -14,19 +14,41 @@ import { StatusNumReservar }  from "./servicos/numero/rifaNum_status_reservar.js
 import { StatusNumConfirmar } from "./servicos/numero/rifaNum_status_ confirmar.js";
 import { StatusNumRetomar }   from "./servicos/numero/rifaNum_status_retomar.js";
 import { StatusNumEstorno }   from "./servicos/numero/rifaNum_status_estorno.js";
-import { ReservarRifaNum }       from "./servicos/numero/rifaNumero_criar.js";
-import { AtualizarRifaNum }   from "./servicos/numero/rifaNum_atualizar.js";
+import { ReservarRifaNum }    from "./servicos/numero/rifaNumero_criar.js";
 import { InserirCliente }     from "./servicos/cliente/cliente_inserir.js"
 import { AtualizarCliente }   from "./servicos/cliente/cliente_atualizar.js"
 import { DeletarCliente }     from "./servicos/cliente/cliente_deletar.js"
+import { db }                 from "../src/_database/bd.js";
+import  path                  from "path"
+import { fileURLToPath }      from "url"
+
+
 
 
 const app = Express()
 const port = 8080
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(Express.static(path.join(__dirname,"public")))
+
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
 app.use (Express.json())
 
 //ROTA
+
+app.get('/criarRifa', async (req, res)=>{
+    const rows = await db.raw('select rifa_nome from rifa inner join rifa_status on rifa.rifa_id = rifa_status.rifa_status_rifa_id where rifa_status_ativo = 1')
+    console.log(rows)
+    res.render('criarRifa.ejs', {rows:rows})
+}),
+
+app.get('/criarUsuario', async (req, res)=>{
+    res.render('criarUsuario.ejs')
+}),
 
 app.get('/', async (req, res)=>{
     res.send('Rifa!')
@@ -52,10 +74,9 @@ app.post('/usuario', async (req, res)=>{
 }),
 
 app.put('/usuario/:id', async (req, res)=>{
-    const usuario_id = req.params.id
-    const usuario_nome = req.body.nome
-    const usuario_email = req.body.email
-    AtualizarUsuario(usuario_id, usuario_nome, usuario_email)
+    ConstUsuarioId(usuario_id)
+    UsuarioInf(usuario_nome, usuario_email)
+    AtualizarUsuario(ConstUsuarioId(usuario_id), UsuarioInf(usuario_nome, usuario_email))
     .then(()=>{
         return res.json({
             erro:false,
@@ -70,7 +91,7 @@ app.put('/usuario/:id', async (req, res)=>{
 }),
 
 app.delete('/usuario/:id', async (req, res)=>{
-    const usuario_id = req.params.id
+    ConstUsuarioId(usuario_id)
     DeletarUsuario(usuario_id)
     .then(()=>{
         return res.json({

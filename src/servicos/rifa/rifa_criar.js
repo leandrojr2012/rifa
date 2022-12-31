@@ -6,19 +6,19 @@ export function CriarRifa(rifa_usuario_id, rifa_nome, rifa_dt_inicio, rifa_qnt_n
     return new Promise((resolve, reject) => {
 
            
-        if(rifa_nome == ''){
+        if(rifa_nome.trim() == ''){
             reject('Campo Nome rifa, nao pode ficar em branco!')          
         }
         else if(caracteres(rifa_nome)){
             reject('Campo Nome rifa, nao pode receber caracteres!')
-        }
+        }//nao precisa existir o campo data para o usuario criar.. ele deve vir automatico
         else if(rifa_dt_inicio == ''){
             reject('Campo Data, nao pode ficar em branco!')
         }
         else if(caracteresTotais(rifa_dt_inicio)){
             reject('Campo Data rifa, nao pode conter caracteres!')
         }
-        else if(rifa_qnt_numero == ""){
+        else if(rifa_qnt_numero.trim() == ""){
             reject('Campo Quantidade de Numero, nao pode ficar em branco')
         }
          else{

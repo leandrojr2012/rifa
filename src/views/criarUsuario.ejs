@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="criarUsuario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <script>
+            function salvar(nome, email){
+
+            let date = {nome, email}
+
+            fetch("http://localhost:8080/usuario?", {
+                method: "POST",
+                body: JSON.stringify(date),
+                headers: {"Content-type": "application/json; charset=UTF-8"}          
+            }).then(function(response){})
+            }
+    </script>
+    <title>CRIAR USUARIO</title>
+</head>
+<body>
+    <body>
+        <header>
+            <h1>RIFAS.com </h1>
+        </header>
+        <div class="user">
+    
+            <h4>user            
+            </h4>
+        </div>
+        <div class="menu">
+            <h4>&#9776MENU</h4>
+        </div>
+        <main>
+            <div class="conteiner">
+                <table class="tab">
+                    <tbody>
+                        <tr>
+                        <td colspan="2"><input placeholder="Digite o NOME de usuario" type="text" class="input" id="nome" style="width: 80%"></input></td>                        </tr>
+                        </tr>
+                        <tr>
+                        <td colspan="2"><input placeholder="Digite o EMAIL de usuario" type="text" class="input" id="email" style="width: 80%"></input></td>                        </tr>
+                    </tbody>
+                </table>
+                <button class="criarUsuario" onclick="salvar(document.getElementById('nome').value, document.getElementById('email').value)">CRIAR USUSARIO</button>
+            </div>
+        </main>
+</body>
+</html>

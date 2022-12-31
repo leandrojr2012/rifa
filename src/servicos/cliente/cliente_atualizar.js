@@ -18,7 +18,7 @@ export async function AtualizarCliente(cliente_id, cliente_nome, cliente_celular
        else if(caracteres(cliente_nome)){
         reject('Campo Nome nao pode receber caracteres para ATUALIZAR usuario!')
        }
-       else if(cliente_nome == ""){
+       else if(cliente_nome.trim() == ""){
         reject('Campo Nome nao pode ficar em branco!')
        }
        else if(cliente_celular == ""){
@@ -31,7 +31,7 @@ export async function AtualizarCliente(cliente_id, cliente_nome, cliente_celular
         reject('Campo celular nao pode conter espaço!')
        }        
         else{
-                        db('cliente')
+                db('cliente')
                 .where({
                     cliente_id: cliente_id
                 }).update({

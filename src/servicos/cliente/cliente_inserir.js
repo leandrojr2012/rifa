@@ -11,7 +11,8 @@ export async function InserirCliente(cliente_nome, cliente_celular){
 
         if(usuarioIgualNome.length > 0){
             reject('Nome existente!')
-        }else if(usuarioIgualCelular.length > 0){
+        }
+        else if(usuarioIgualCelular.length > 0){
             reject('Celular existente!')
         }
         else if (caracteres(cliente_nome)){
@@ -20,7 +21,7 @@ export async function InserirCliente(cliente_nome, cliente_celular){
         /*else if(verificacaoCelular == false){
             reject('Celular invalido')
         }*/
-        else if(cliente_nome == ""){
+        else if(cliente_nome.trim() == ""){
             reject('Campo Nome nao pode ficar em branco!')
         }
         else if(cliente_celular == ""){

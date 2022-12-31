@@ -18,7 +18,7 @@ export async function AtualizarUsuario(usuario_id, usuario_nome, usuario_email){
        else if(caracteres(usuario_nome)){
         reject('Campo Nome nao pode receber caracteres para ATUALIZAR usuario!')
        }
-       else if(usuario_nome == ""){
+       else if(usuario_nome.trim() == ""){
         reject('Campo Nome nao pode ficar em branco!')
        }
        else if(usuario_email == ""){
