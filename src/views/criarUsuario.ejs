@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,29 +24,38 @@
 </head>
 <body>
     <body>
-        <header>
-            <h1>RIFAS.com </h1>
-        </header>
-        <div class="user">
-    
-            <h4>user            
-            </h4>
-        </div>
+        <div class="conteinerHead">
         <div class="menu">
             <h4>&#9776MENU</h4>
         </div>
+        <h1>RIFAS.com </h1>
+        <div class="conteinerUser">
+            <h4>user</h4>
+        </div>
+        </div>
         <main>
-            <div class="conteiner">
+            <div class="conteinerTabela">
                 <table class="tab">
                     <tbody>
                         <tr>
-                        <td colspan="2"><input placeholder="Digite o NOME de usuario" type="text" class="input" id="nome" style="width: 80%"></input></td>                        </tr>
+                            <td colspan="2">
+                                <div class="conteinerInput">
+                                    <input placeholder="Digite o NOME de usuario" type="text" class="input" id="nome" style="width: 80%"></input>
+                                </div>
+                            </td>                        
                         </tr>
                         <tr>
-                        <td colspan="2"><input placeholder="Digite o EMAIL de usuario" type="text" class="input" id="email" style="width: 80%"></input></td>                        </tr>
+                            <td colspan="2">
+                                <div class="conteinerInput">
+                                    <input placeholder="Digite o EMAIL de usuario" type="text" class="input" id="email" style="width: 80%"></input>
+                                </div>
+                            </td>                       
+                        </tr>
                     </tbody>
                 </table>
-                <button class="criarUsuario" onclick="salvar(document.getElementById('nome').value, document.getElementById('email').value)">CRIAR USUSARIO</button>
+            </div>
+            <div class="conteinerBotao">
+                <button class="botaoCriarUsuario" onclick="salvar(document.getElementById('nome').value, document.getElementById('email').value)">CRIAR USUARIO</button>
             </div>
         </main>
 </body>

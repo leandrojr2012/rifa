@@ -41,9 +41,9 @@ app.use (Express.json())
 //ROTA
 
 app.get('/criarRifa', async (req, res)=>{
-    const rows = await db.raw('select rifa_nome from rifa inner join rifa_status on rifa.rifa_id = rifa_status.rifa_status_rifa_id where rifa_status_ativo = 1')
-    console.log(rows)
-    res.render('criarRifa.ejs', {rows:rows})
+    const rows = await db('rifa')
+    const rowsStatus = await db .select('*').from('rifa_status').join('rifa', {'rifa.rifa_id': 'rifa_status.rifa_status_rifa_id'}).where({rifa_status_ativo:1})
+    res.render('criarRifa.ejs', {rows:rows, rowsStatus:rowsStatus})
 }),
 
 app.get('/criarUsuario', async (req, res)=>{

@@ -8,14 +8,13 @@ body{
     background-color: #f9f9e9;
 }
 
-header{
+.conteinerHead{
+    display:flex;
+    justify-content:space-between;
     background-color: rgb(76, 76, 76);
-    padding: 10px;
     color: #fff;
     text-align: center;
     border-bottom: 5px solid rgb(112, 113, 113);
-    width: 100%;
-    height: 7vh;
 }
 
 h1{
@@ -23,40 +22,37 @@ h1{
     font-family: 'Covered By Your Grace', cursiva;
 }
 
-.user{
+.conteinerUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 9.8vh;
     width: 12vh;
     background-color: rgb(70, 68, 68);
     color: #fff;
-    position: absolute;
-    top: 0;
-    left: 185vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 9.8vh;
     width: 12vh;
     background-color: rgb(37, 37, 37);
     color: #fff;
-    position: absolute;
-    top: 0;
-    left: 0;
+}
+
+.conteinerTabela{
+    padding-top: 16vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .tab{
     background-color: rgb(165, 164, 164);
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border: 1px solid rgb(232, 228, 228);
-    border-radius: 10px;    
+    border-radius: 7px;    
     padding-bottom: 20px;
     width: 130vh;
     height: 30vh;
@@ -66,7 +62,7 @@ table{
     padding: 2vh;
 }
 
-.input{
+.input{ 
     padding: 2vh;
     background-color:rgb(165, 164, 164) ;
     border: none;
@@ -74,12 +70,22 @@ table{
 }
 
 .input::placeholder{
-    position: relative;
-    left: 50%;
-
+    text-align: center;
 }
 
-.criarUsuario{
+input{
+    outline: 0;
+    text-align: center;
+}
+
+.conteinerInput{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botaoCriarUsuario{
+    margin-top: 16vh;
     background-color: rgb(116, 115, 115);
     color: #fff;
     border-radius: 3px;
@@ -88,14 +94,13 @@ table{
     transition: all ease 0.9s;
     width: 20vh;
     height: 6vh;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 button:hover{
     background-color: rgb(68, 68, 68);
+}
+
+.conteinerBotao{
+    display: flex;
+    justify-content: center;
 }

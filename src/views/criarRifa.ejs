@@ -51,11 +51,14 @@
                         <tr>
                             <td class="linhas">
                                 <%= rows[i].rifa_nome %>
-
                             </td>
                             <td>
                                 <div class="status" id="statusRifa">
+                                    <% for(let i=0; i<rowsStatus.length; i++) {%>
+
                                     <button> 
+                                         <%= rowsStatus[i].rifa_status_condicao %>
+                                         <%= console.log(i) %>
                                     </button>
                                     <% } %>
                                 </div>
